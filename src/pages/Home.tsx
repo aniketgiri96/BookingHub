@@ -37,7 +37,7 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 spotlight-effect"></div>
+        <div className="absolute inset-10 spotlight-effect"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black pointer-events-none"></div>
         
         <div className="container mx-auto px-6 py-24 relative">
