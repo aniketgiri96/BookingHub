@@ -150,4 +150,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Lucide Icons](https://lucide.dev/) for the beautiful icon set
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [Pexels](https://www.pexels.com/) for the stock images
+
