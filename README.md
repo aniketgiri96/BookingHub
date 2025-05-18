@@ -1,6 +1,6 @@
 # BookingHub - Modern Space Booking Platform
 
-![BookingHub](https://images.pexels.com/photos/7688460/pexels-photo-7688460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
+![BookingHub](https://www.pexels.com/photo/group-of-people-on-a-conference-room-1181406/)
 
 BookingHub is a modern, full-featured space booking platform built with React and TypeScript. It provides an intuitive interface for users to browse and book various spaces like meeting rooms, conference halls, and workspaces.
 

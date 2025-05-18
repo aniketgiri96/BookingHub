@@ -121,17 +121,17 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-blue-400 mr-2 mt-0.5" />
                 <span className="text-gray-300">
-                  123 Booking Street, Suite 100<br />
-                  San Francisco, CA 94103
+                  kolkata<br />
+                  Westbengal
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-blue-400 mr-2" />
-                <span className="text-gray-300">(123) 456-7890</span>
+                <span className="text-gray-300">8967229781</span>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-blue-400 mr-2" />
-                <span className="text-gray-300">info@bookinghub.com</span>
+                <span className="text-gray-300">girianiket1996@gmail.com</span>
               </li>
             </ul>
           </div>

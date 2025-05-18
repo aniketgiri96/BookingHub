@@ -16,7 +16,7 @@ const ServiceFilter: React.FC<ServiceFilterProps> = ({
   const categories = ['all', ...Array.from(new Set(services.map(s => s.category)))];
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-5 mb-6">
+    <div className="bg-gray-100 rounded-lg shadow-md p-5 mb-6">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Filter by Category</h3>
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => (
