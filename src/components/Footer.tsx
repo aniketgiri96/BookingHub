@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-800 text-white">
       <div className="container mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
@@ -45,21 +45,6 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/login" className="text-gray-300 hover:text-white">
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link to="/register" className="text-gray-300 hover:text-white">
-                  Register
-                </Link>
-              </li>
-              <li>
                 <a href="#" className="text-gray-300 hover:text-white">
                   About Us
                 </a>
@@ -78,7 +63,7 @@ const Footer: React.FC = () => {
           </div>
           
           {/* Services */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">Our Services</h3>
             <ul className="space-y-2">
               <li>
@@ -112,7 +97,7 @@ const Footer: React.FC = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
           
           {/* Contact */}
           <div>
@@ -121,8 +106,7 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-blue-400 mr-2 mt-0.5" />
                 <span className="text-gray-300">
-                  kolkata<br />
-                  Westbengal
+                  kolkata, Westbengal
                 </span>
               </li>
               <li className="flex items-center">
