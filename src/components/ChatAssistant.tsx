@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, X, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -35,16 +37,12 @@ const ChatAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: userMessage }),
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: { message: userMessage }
       });
 
-      const data = await response.json();
-      
+      if (error) throw error;
+
       setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
     } catch (error) {
       console.error('Failed to get response:', error);
@@ -66,79 +64,96 @@ const ChatAssistant: React.FC = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
-      {!isOpen ? (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="bg-primary-600 hover:bg-primary-700 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-105"
-        >
-          <MessageCircle className="h-6 w-6" />
-        </button>
-      ) : (
-        <div className="bg-dark-900 border border-dark-800 rounded-lg shadow-xl w-[360px] h-[480px] flex flex-col">
-          {/* Header */}
-          <div className="p-4 border-b border-dark-800 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <MessageCircle className="h-5 w-5 text-primary-500" />
-              <h3 className="font-semibold text-white">Booking Assistant</h3>
-            </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-dark-400 hover:text-white transition-colors"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === 'user'
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-dark-800 text-dark-100'
-                  }`}
-                >
-                  {message.content}
-                </div>
+      <AnimatePresence>
+        {!isOpen ? (
+          <motion.button
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            onClick={() => setIsOpen(true)}
+            className="bg-primary-600 hover:bg-primary-700 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-105"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </motion.button>
+        ) : (
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-dark-900 border border-dark-800 rounded-lg shadow-xl w-[360px] h-[480px] flex flex-col"
+          >
+            <div className="p-4 border-b border-dark-800 flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <MessageCircle className="h-5 w-5 text-primary-500" />
+                <h3 className="font-semibold text-white">Booking Assistant</h3>
               </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-dark-800 text-dark-100 rounded-lg p-3">
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <div className="p-4 border-t border-dark-800">
-            <div className="flex space-x-2">
-              <textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="flex-1 bg-dark-800 text-white placeholder-dark-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 resize-none"
-                rows={1}
-              />
               <button
-                onClick={handleSend}
-                disabled={isLoading || !input.trim()}
-                className="bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg p-2 transition-colors"
+                onClick={() => setIsOpen(false)}
+                className="text-dark-400 hover:text-white transition-colors"
               >
-                <Send className="h-5 w-5" />
+                <X className="h-5 w-5" />
               </button>
             </div>
-          </div>
-        </div>
-      )}
+
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <AnimatePresence>
+                {messages.map((message, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[80%] rounded-lg p-3 ${
+                        message.role === 'user'
+                          ? 'bg-primary-600 text-white'
+                          : 'bg-dark-800 text-dark-100'
+                      }`}
+                    >
+                      {message.content}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+              {isLoading && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-start"
+                >
+                  <div className="bg-dark-800 text-dark-100 rounded-lg p-3">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  </div>
+                </motion.div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <div className="p-4 border-t border-dark-800">
+              <div className="flex space-x-2">
+                <textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type your message..."
+                  className="flex-1 bg-dark-800 text-white placeholder-dark-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 resize-none"
+                  rows={1}
+                />
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleSend}
+                  disabled={isLoading || !input.trim()}
+                  className="bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg p-2 transition-colors"
+                >
+                  <Send className="h-5 w-5" />
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

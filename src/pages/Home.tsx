@@ -3,6 +3,8 @@ import { useBooking, Service } from '../context/BookingContext';
 import BookingCard from '../components/BookingCard';
 import ServiceFilter from '../components/ServiceFilter';
 import { Search, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Spotlight } from '../components/ui/spotlight';
 
 const Home: React.FC = () => {
   const { services } = useBooking();
@@ -35,22 +37,33 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 spotlight-effect"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black pointer-events-none"></div>
-        
-        <div className="container mx-auto px-6 py-24 relative">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="container mx-auto px-6 py-24 relative"
+        >
           <div className="max-w-5xl mx-auto text-center mb-12">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <motion.h1
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+            >
               Find Your Perfect
               <span className="block text-primary-400 mt-2">Space</span>
-            </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
+            >
               Discover and book premium spaces for meetings, events, and work. Your ideal venue is just a click away.
-            </p>
+            </motion.p>
             
-            <div className="relative max-w-2xl mx-auto">
+            <Spotlight className="relative max-w-2xl mx-auto">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-gray-400" />
               </div>
@@ -61,35 +74,57 @@ const Home: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-            </div>
+            </Spotlight>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-              <div className="card-spotlight rounded-xl p-6">
-                <Calendar className="h-8 w-8 text-primary-400 mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">Real-time Booking</h3>
-                <p className="text-gray-400">Instant confirmation for your reservations</p>
-              </div>
-              <div className="card-spotlight rounded-xl p-6">
-                <CheckCircle className="h-8 w-8 text-primary-400 mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">Verified Spaces</h3>
-                <p className="text-gray-400">Quality assured professional environments</p>
-              </div>
-              <div className="card-spotlight rounded-xl p-6">
-                <Clock className="h-8 w-8 text-primary-400 mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">Flexible Duration</h3>
-                <p className="text-gray-400">Book by the hour or full day</p>
-              </div>
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <Spotlight className="rounded-xl p-6 bg-dark-900/50 backdrop-blur-sm border border-dark-800">
+                  <Calendar className="h-8 w-8 text-primary-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">Real-time Booking</h3>
+                  <p className="text-gray-400">Instant confirmation for your reservations</p>
+                </Spotlight>
+              </motion.div>
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <Spotlight className="rounded-xl p-6 bg-dark-900/50 backdrop-blur-sm border border-dark-800">
+                  <CheckCircle className="h-8 w-8 text-primary-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">Verified Spaces</h3>
+                  <p className="text-gray-400">Quality assured professional environments</p>
+                </Spotlight>
+              </motion.div>
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <Spotlight className="rounded-xl p-6 bg-dark-900/50 backdrop-blur-sm border border-dark-800">
+                  <Clock className="h-8 w-8 text-primary-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">Flexible Duration</h3>
+                  <p className="text-gray-400">Book by the hour or full day</p>
+                </Spotlight>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Services Section */}
       <section className="container mx-auto px-4 py-16">
-        <div className="mb-8">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
           <h2 className="text-4xl font-bold text-white mb-3">Available Spaces</h2>
           <p className="text-gray-400 text-lg">Find the perfect space for your needs</p>
-        </div>
+        </motion.div>
         
         <ServiceFilter 
           selectedCategory={selectedCategory} 
@@ -98,12 +133,12 @@ const Home: React.FC = () => {
         
         {filteredServices.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredServices.map((service) => (
-              <BookingCard key={service.id} service={service} />
+            {filteredServices.map((service, index) => (
+              <BookingCard key={service.id} service={service} index={index} />
             ))}
           </div>
         ) : (
-          <div className="card-spotlight rounded-xl text-center py-12">
+          <Spotlight className="rounded-xl text-center py-12 bg-dark-900/50 backdrop-blur-sm border border-dark-800">
             <p className="text-gray-400 mb-4">No spaces found matching your criteria.</p>
             <button
               onClick={() => {
@@ -114,7 +149,7 @@ const Home: React.FC = () => {
             >
               Reset Filters
             </button>
-          </div>
+          </Spotlight>
         )}
       </section>
     </div>
